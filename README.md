@@ -5,21 +5,17 @@ A robust, scalable campus notification platform designed to deliver real-time up
 ## 📺 UI Proof of Implementation
 > For a deep dive into the architecture and design decisions, please refer to the [Technical Design Document](./notification_system_design.md).
 
-### 🖥️ Desktop Views
+### 🖥️ Web Interface (Desktop View)
 
 **All Notifications Feed**
 Displays the full layout with category filters, limit selection, and a clean, paginated list of notifications fetched from the live API.
-![All Notifications Feed](./screenshots/all_notifications_desktop.png)
+![All Notifications Feed 1](./screenshots/all_notifications_web_1.jpg)
+![All Notifications Feed 2](./screenshots/all_notifications_web_2.jpg)
 
 **Priority Inbox (★ Logic Verification)**
 Demonstrates the weight-based sorting algorithm (**Placement > Result > Event**) combined with recency. This view ensures critical information is never missed.
-![Priority Inbox Feed](./screenshots/priority_inbox_desktop.png)
-
-### 📱 Mobile Responsiveness
-
-**Mobile View Feed**
-The interface is fully responsive, utilizing a flexible grid system to ensure a seamless experience on smartphones and tablets.
-![Mobile View](./screenshots/notifications_mobile.png)
+![Priority Inbox Feed 1](./screenshots/priority_inbox_web_1.jpg)
+![Priority Inbox Feed 2](./screenshots/priority_inbox_web_2.jpg)
 
 ---
 

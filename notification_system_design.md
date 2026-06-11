@@ -800,4 +800,8 @@ The frontend is a responsive Next.js application built with Material UI, fulfill
     npm run dev
     ```
 4.  Access the application at `http://localhost:3000`.
-ifications_2.jpg)
+
+### Frontend Application Screenshots
+
+![All Notifications 1](./screenshots/all_notifications_1.jpg)
+![All Notifications 2](./screenshots/all_notifications_2.jpg)

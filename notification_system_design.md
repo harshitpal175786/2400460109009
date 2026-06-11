@@ -653,3 +653,107 @@ worker():
 
         except Exception:
             retry(job)
+```
+
+# Stage 6
+
+## Priority Inbox Approach
+
+The Priority Inbox ranks unread notifications by two factors:
+
+1. Notification type weight.
+2. Recency within the same type.
+
+Weights:
+
+| Notification Type | Weight |
+|-------------------|--------|
+| Placement         | 3      |
+| Result            | 2      |
+| Event             | 1      |
+
+The priority key is:
+
+```text
+(type_weight, timestamp)
+```
+
+This ensures:
+
+- All Placement notifications rank above all Result notifications.
+- All Result notifications rank above all Event notifications.
+- Newer notifications rank higher only within the same notification type.
+
+## Efficient Top 10 Maintenance
+
+The implementation uses a fixed-size min heap of size 10.
+
+For each notification:
+
+1. Validate required fields: `ID`, `Type`, `Message`, `Timestamp`.
+2. Convert `Type` to its configured weight.
+3. Parse `Timestamp`.
+4. Build a priority key.
+5. Push into the heap if fewer than 10 items exist.
+6. If the heap already has 10 items, compare the new notification with the weakest item at the heap root.
+7. Replace the heap root only when the new notification has higher priority.
+
+This avoids repeatedly sorting the complete dataset.
+
+## Complexity
+
+For `n` notifications and `k = 10`:
+
+```text
+Time:  O(n log k) = O(n log 10)
+Space: O(k) = O(10)
+```
+
+Only the final heap of 10 notifications is sorted for display.
+
+## Continuous Updates
+
+The backend exposes:
+
+```js
+update_top_notifications(newNotification)
+```
+
+When a new notification arrives through polling, WebSocket, or another event stream, this function updates the heap in `O(log 10)` time without recalculating the full list.
+
+## Error Handling
+
+The implementation handles:
+
+- API failures and non-200 responses.
+- Invalid JSON.
+- Missing `notifications` array.
+- Empty responses.
+- Missing notification fields.
+- Unsupported notification types.
+- Invalid timestamps.
+
+## Logging
+
+The Stage 6 implementation consumes the reusable Affordmed `Log(stack, level, package, message)` middleware and logs:
+
+- Notification API request start.
+- Notification API request success.
+- Notification count.
+- Priority calculation.
+- Top 10 generation.
+- Validation and API errors.
+
+## Code Deliverable
+
+The implementation is available at:
+
+```text
+notification_app_be/stage6.js
+```
+
+It can be executed with:
+
+```bash
+node notification_app_be/stage6.js
+```

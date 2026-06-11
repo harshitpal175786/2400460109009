@@ -57,7 +57,7 @@ export default function PriorityNotificationsPage() {
     await logFrontend("info", "page", "priority notifications fetch started");
 
     try {
-      const response = await fetch("/api/notifications?limit=100&page=1", {
+      const response = await fetch("/api/notifications?limit=10&page=1", {
         cache: "no-store",
       });
       const data = await response.json();

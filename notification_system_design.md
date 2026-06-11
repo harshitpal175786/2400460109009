@@ -757,3 +757,41 @@ It can be executed with:
 ```bash
 node notification_app_be/stage6.js
 ```
+
+# Stage 7
+
+## Frontend Implementation
+
+The frontend is a responsive Next.js application built with Material UI, fulfilling the requirements for both a comprehensive notification view and a specialized Priority Inbox.
+
+### Key Features
+
+1.  **Responsive Layout**: Uses a sticky AppShell with a responsive Drawer for navigation, ensuring usability across mobile, tablet, and desktop devices.
+2.  **Notification List**: Displays all notifications with support for server-side pagination and type-based filtering.
+3.  **Priority Inbox**: A dedicated view that calculates the top 'n' notifications (10, 15, or 20) based on the weighted priority algorithm (Placement > Result > Event) and recency.
+4.  **View State Management**: Uses browser `localStorage` to track viewed notifications, visually distinguishing between new and seen items without requiring backend persistent state for this session.
+5.  **Real-Time Simulation**: Features a "Refresh" mechanism that interacts with the backend proxy to fetch the latest data from the external Notification API.
+6.  **Theming**: Custom Material UI theme with a clean, professional aesthetic, prioritizing readability and highlighting critical notification types with distinct iconography and colors.
+
+### Architecture
+
+- **Next.js App Router**: Provides efficient routing and server-side rendering capabilities.
+- **Backend Proxy Routes**: `/api/notifications` and `/api/logs` act as proxies to the external API and the logging middleware, handling authentication and error mapping.
+- **Material UI**: Used exclusively for styling and component structure to ensure a production-grade UI/UX.
+- **Custom Logging**: Integrated frontend logging that pushes browser events to the backend logging middleware for unified observability.
+
+### Running the Application
+
+1.  Navigate to the frontend directory:
+    ```bash
+    cd notification_app_fe
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+4.  Access the application at `http://localhost:3000`.

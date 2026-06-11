@@ -1,9 +1,8 @@
 import { createRequire } from "module";
-import path from "path";
 import { NextResponse } from "next/server";
 
 const require = createRequire(import.meta.url);
-const { Log } = require(path.join(process.cwd(), "..", "logging_middleware"));
+const { Log } = require("../../../node_modules/logging_middleware/index.js");
 
 const NOTIFICATION_API_URL =
   process.env.NOTIFICATION_API_URL ||

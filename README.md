@@ -9,13 +9,13 @@ A robust, scalable campus notification platform designed to deliver real-time up
 
 **All Notifications Feed**
 Displays the full layout with category filters, limit selection, and a clean, paginated list of notifications fetched from the live API.
-![All Notifications Feed 1](./screenshots/all_notifications_web_1.jpg)
-![All Notifications Feed 2](./screenshots/all_notifications_web_2.jpg)
+![All Notifications Feed 1](./screenshot/all_notifications_web_1.jpg)
+![All Notifications Feed 2](./screenshot/all_notifications_web_2.jpg)
 
 **Priority Inbox (★ Logic Verification)**
 Demonstrates the weight-based sorting algorithm (**Placement > Result > Event**) combined with recency. This view ensures critical information is never missed.
-![Priority Inbox Feed 1](./screenshots/priority_inbox_web_1.jpg)
-![Priority Inbox Feed 2](./screenshots/priority_inbox_web_2.jpg)
+![Priority Inbox Feed 1](./screenshot/priority_inbox_web_1.jpg)
+![Priority Inbox Feed 2](./screenshot/priority_inbox_web_2.jpg)
 
 ---
 

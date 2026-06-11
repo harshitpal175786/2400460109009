@@ -2,7 +2,7 @@ import { createRequire } from "module";
 import { NextResponse } from "next/server";
 
 const require = createRequire(import.meta.url);
-const { Log } = require("../../../node_modules/logging_middleware");
+const { Log } = require("logging_middleware_local");
 
 export async function POST(request) {
   try {

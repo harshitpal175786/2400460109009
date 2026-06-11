@@ -758,6 +758,11 @@ It can be executed with:
 node notification_app_be/stage6.js
 ```
 
+### Priority Inbox Screenshots
+
+![Priority Inbox 1](./screenshots/priority_inbox_1.jpg)
+![Priority Inbox 2](./screenshots/priority_inbox_2.jpg)
+
 # Stage 7
 
 ## Frontend Implementation
@@ -795,3 +800,4 @@ The frontend is a responsive Next.js application built with Material UI, fulfill
     npm run dev
     ```
 4.  Access the application at `http://localhost:3000`.
+ifications_2.jpg)

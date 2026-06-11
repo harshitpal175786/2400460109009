@@ -547,3 +547,109 @@ For optimal scalability and performance:
 
 This architecture minimizes database load, improves response time, and supports large-scale notification delivery.
 
+
+
+
+# Stage 5
+
+## Problems with Current Implementation
+
+The current implementation processes notifications sequentially.
+
+### Issues
+
+- Slow for 50,000 students.
+- Single failure can interrupt processing.
+- No retry mechanism.
+- No fault tolerance.
+- Email API latency affects overall performance.
+- Database writes and email sending are tightly coupled.
+- Difficult to recover failed notifications.
+
+---
+
+## Why This Design Fails
+
+If email delivery fails for 200 students midway:
+
+- Some students receive notifications.
+- Some students do not.
+- System enters an inconsistent state.
+- Manual recovery may be required.
+
+---
+
+## Recommended Architecture
+
+HR Request
+    |
+Notification Service
+    |
+Message Queue (RabbitMQ / Kafka)
+    |
++------------------+
+|                  |
+Email Worker     Push Worker
+|                  |
+Email API      WebSocket Service
+
+Database writes happen independently before notification processing.
+
+---
+
+## Save to Database First
+
+Notification records should be stored before sending emails.
+
+Benefits:
+
+- Source of truth is preserved.
+- Failed notifications can be retried.
+- Delivery status can be tracked.
+- System remains consistent.
+
+---
+
+## Retry Strategy
+
+Failed notifications are retried automatically.
+
+Example:
+
+- Retry 1 after 1 minute
+- Retry 2 after 5 minutes
+- Retry 3 after 15 minutes
+
+After maximum retries, move to Dead Letter Queue (DLQ).
+
+---
+
+## Revised Pseudocode
+
+```python
+function notify_all(student_ids, message):
+
+    notification_id = save_notification(message)
+
+    for student_id in student_ids:
+        queue.publish({
+            notification_id,
+            student_id,
+            message
+        })
+
+
+worker():
+
+    while true:
+
+        job = queue.consume()
+
+        try:
+            send_email(job.student_id, job.message)
+            push_to_app(job.student_id, job.message)
+
+            mark_success(job.notification_id)
+
+        except Exception:
+            retry(job)
